@@ -4,6 +4,7 @@ import (
 	"monkey/01/lexer"
 	"monkey/02/ast"
 	"testing"
+	"fmt"
 )
 
 func TestLetStatements(t *testing.T) {
@@ -204,4 +205,25 @@ func TestParsingPrefixExpressions(t *testing.T){
 			return
 		}
 	}
+}
+
+func testIntegerLiteral(t *Testing, il ast.Expression, value int64) bool {
+	integ, ok := il.(*ast.IntegerLiteral)
+	if !ok {
+		t.Errorf("il is not *ast.IntegerLiteral. got=%T", il)
+		return false
+	}
+
+	if integ.Value != value {
+		t.Errorf("integ.Value not %d. got=%d", value, integ.Value)
+		return false
+	}
+
+	if integ.TokenLiteral() != fmt.Sprintf("%d", value) {
+		t.Errorf("integ.TokenLiteral not %d. got=%s", value,
+			integ.TokenLiteral())
+			return false
+	}
+	
+	return true
 }
